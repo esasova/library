@@ -5,10 +5,17 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\BookRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+
+
 
 /**
  * @ORM\Entity(repositoryClass=BookRepository::class)
  * @ApiResource()
+ * @ApiFilter(SearchFilter::class, properties={"title": "ipartial", "author": "ipartial", "genre": "exact"})
+ * @ApiFilter(DateFilter::class, properties={"publicationDate"})
  */
 class Book
 {
