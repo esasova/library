@@ -1,5 +1,5 @@
 <template>
-<v-row v-if="book" justify-center>
+<v-row v-if="book && user" justify-center>
     <v-col cols=12 sm=8 class="mx-auto">
         <v-card class="mx-6 my-5 d-flex flex-column flex-sm-row justify-center align-center">
           <v-col sm=3>
@@ -15,8 +15,8 @@
             <v-card-text>{{ book.description }}</v-card-text>
           </v-col>
         </v-card>
-        <v-btn color="primary" elevation="0" tile class="mx-6 mt-4" @click="reserveBook" :disabled="reserved || book.stock < 0 || !$auth.user.isValidated"><span class="secondary--text font-weight-bold montserrat">Réserver</span></v-btn>
-        <v-col v-if="!$auth.user.isValidated" class="accent--text montserrat mt-2 mx-6">
+        <v-btn color="primary" elevation="0" tile class="mx-6 mt-4" @click="reserveBook" :disabled="reserved || book.stock < 0 || !user.isValidated"><span class="secondary--text font-weight-bold montserrat">Réserver</span></v-btn>
+        <v-col v-if="!user.isValidated" class="accent--text montserrat mt-2 mx-6">
           Pour réserver un livre, votre inscription doit être validée. Adressez-vous à nos employés
         </v-col>
     <v-col v-if="reserved" class="montserrat primary--text">Le livre a été réservé</v-col>
@@ -28,15 +28,23 @@
     data () {
       return {
         book: null,
-        reserved: false
+        reserved: false,
+        user: null
       }
     },
     mounted () {
-      this.getBook()
+      this.getBook(),
+      this.searchUserbyId()
     },
     methods: {
       async getBook () {
         this.book = await this.$axios.$get('/api/books/' + this.$route.params.id + '.json')
+      },
+      async searchUserbyId () {
+        await this.$axios.$get('/api/users/' + this.$auth.user.id + '.json')
+        .then((response) => {
+          this.user = response
+        })
       },
       async reserveBook () {
         await this.$axios.$post('/api/reserveds', {
