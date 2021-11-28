@@ -16,6 +16,9 @@
           </v-col>
         </v-card>
         <v-btn color="primary" elevation="0" tile class="mx-6 mt-4" @click="reserveBook" :disabled="reserved || book.stock < 0 || !$auth.user.isValidated"><span class="secondary--text font-weight-bold montserrat">Réserver</span></v-btn>
+        <v-col v-if="!$auth.user.isValidated" class="accent--text montserrat mt-2 mx-6">
+          Pour réserver un livre, votre inscription doit être validée. Adressez-vous à nos employés
+        </v-col>
     <v-col v-if="reserved" class="montserrat primary--text">Le livre a été réservé</v-col>
     </v-col>
 </v-row>
@@ -30,8 +33,6 @@
     },
     mounted () {
       this.getBook()
-      console.log(this.$auth.user)
-      console.log(this.book)
     },
     methods: {
       async getBook () {

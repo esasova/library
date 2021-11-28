@@ -60,7 +60,6 @@
           }
         })
         .then((resp) => {
-          console.log('toto')
           if(this.$auth.user.roles.includes('ROLE_ADMIN')) {
             this.$router.push('/admin')
           } else {

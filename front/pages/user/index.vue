@@ -11,7 +11,10 @@
         <v-card-title class="montserrat primary--text font-weight-bold font30">
           Vos emprunts
         </v-card-title>
-        <v-col v-for="(loan, i) in user.borroweds" :key="loan.id">
+       <v-col v-if="user.borroweds.length === 0" class="base--text montserrat text-center">
+         Vous n'avez pas d'emprunts
+        </v-col> 
+      <v-col v-for="(loan, i) in user.borroweds" :key="loan.id">
       <v-card-text class="montserrat primary--text font20">
         {{ loan.Book.title }}
       </v-card-text>
@@ -31,6 +34,9 @@
       <v-card-title class="montserrat primary--text font-weight-bold font30 text-center">
         Vos réservations
       </v-card-title>
+      <v-col v-if="user.reserveds.length === 0" class="base--text montserrat text-center">
+         Vous n'avez pas de réservations
+        </v-col> 
       <v-col v-for="(res, i) in user.reserveds" :key="res.id">
       <v-card-text class="montserrat primary--text font20">
         {{ res.Book.title }}
@@ -54,8 +60,7 @@ import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
-      user: null,
-      overdue: []
+      user: null
     }
   },
   computed: {
@@ -68,9 +73,7 @@ export default {
       async searchUserbyId () {
         await this.$axios.$get('/api/users/' + this.loggedInUser.id + '.json')
         .then((response) => {
-          this.user = response,
-          this.overdue = this.user.borroweds.filter(b => this.$dayjs(this.$dayjs(b.end).format()).isBefore(this.$dayjs().format()))
-          console.log(this.overdue)
+          this.user = response
         })
       }
   }
