@@ -58,4 +58,8 @@ yarn install
 yarn dev
 ## Le projet va se lancer au localhost:3000
 ```
+User admin : 
+admin@bibli.fr
+psw: test
 
+MDP pour tous les utilisateurs : test
