@@ -57,10 +57,9 @@
                 <v-select
                   class="mt-6 mb-4 mx-4"
                   v-model="genre"
-                  :items="genre"
+                  :items="availableGenre"
+                  item-text=""
                   label="Genre"
-                  chips
-                  clearable
                   solo
                 />
                 <v-text-field
@@ -123,14 +122,11 @@ export default {
       yearTo: null,
       genre: null,
       result: null,
-      genre: ['roman', 'BD', 'poésie', 'documentaire', 'policier', 'manga']
+      availableGenre: ['roman', 'BD', 'poésie', 'documentaire', 'policier', 'manga']
     }
   },
     computed: {
     ...mapGetters(['isAuthenticated', 'loggedInUser'])
-  },
-  mounted () {
-    console.log(this.$auth.user.roles.includes('ROLE_ADMIN'))
   },
   methods: {
     async simpleSearchBooks () {
@@ -143,7 +139,6 @@ export default {
       })
     },
     async advancedSearch () {
-      console.log(this.author, this.yearFrom, this.yearTo)
       await this.$axios.$get('/api/books.json',
       {
         params: {
