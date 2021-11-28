@@ -23,36 +23,41 @@ https://app.moqups.com/mZpagkWfIffJQaxHd0CdTuae8ickq6Tn/view/page/ae973f342
 
 ## Installer le projet
 - Cloner le répository
-- Installer le projet symfony
+- Installer le back
 ```bash
 cd back/
 ```
 ```
 composer install
 ```
+Pour créer la base de données, il faut avoir mysql d'installé
+
+Customisez le DATABASE_URL dans le fichier /back/.env en fonction de votre configuration
+
+Lancer la commande de création de la base de donnée : 
+```bash
+php bin/console doctrine:database:create
+```
+Ensuite, lancer la migration : 
+```bash
+php bin/console doctrine:migrations:migrate
+```
+Créer les fixtures : 
+```bash
+php bin/console hautelook:fixtures:load
+```
+Créer les jwt key : 
+```bash
+php bin/console lexik:jwt:generate-keypair
+```
 Lancez le projet : 
 ```bash
 symfony server:start
 ```
-Pour créer la base de données, il faut installer le WAMPP/MAMPP/LAMPP
-Customisez la ligne suivante du fichier /back/.env :
-```
-DATABASE_URL="mysql://LOGIN:root@127.0.0.1:3306/library_db?serverVersion=mariadb-10.4.18"
-```
-Lancer la commande de création de la base de donnée : 
+
+- Installer le front
 ```bash
-symfony console doctrine:database:create
-```
-Ensuite, lancer la migration : 
-```bash
-symfony console doctrine:migrations:migrate
-```
-Créer les fixtures : 
-```bash
-symfony console hautelook:fixtures:load
-```
-- Lancer
-```bash
+cd ..
 cd front
 yarn install
 yarn dev
