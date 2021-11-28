@@ -1,8 +1,7 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
-  // Target: https://go.nuxtjs.dev/config-target
-  target: 'static',
+  mode: 'spa',
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -31,6 +30,20 @@ export default {
     defaultTimeZone: 'utc',
     plugins: ['utc', 'timezone', 'isBetween']
   },
+  auth: {
+    strategies: {
+      local: {
+        user: {
+          property: ''
+        },
+        endpoints: {
+          login: { url: 'http://localhost:8000/api/login_check', method: 'post', propertyName: 'token' },
+          user: { url: 'http://localhost:8000/api/users/me', method: 'get', propertyName: 'data' },
+          logout: false
+        }
+      }
+    }
+  },
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '~/assets/style/app.scss'
@@ -52,7 +65,8 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/dayjs'
+    '@nuxtjs/dayjs',
+    '@nuxtjs/auth-next'
   ],
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

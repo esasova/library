@@ -1,0 +1,10 @@
+include:
+  - ./book.yaml
+  - ./user.yaml
+
+App\Entity\Borrowed:
+  borrowed_{1..15}:
+    start: <dateTimeThisMonth()>
+    end: <((new DateTime($start->format('Y-m-d H:i')))->modify("+3 weeks"))>
+    user: '@user*'
+    book: '@book*'

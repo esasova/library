@@ -5,6 +5,11 @@
         Recherche dans le catalogue
       </div>
       <hr class="base"/>
+      <v-row justify=center class="mt-6">
+        <div class="montserrat base--text font-weight-bold">
+          Bonjour {{ loggedInUser.name }}
+          </div>
+      </v-row>
       <v-row justify=center>
         <v-tabs centered>
           <v-tabs-slider color="base">
@@ -20,7 +25,7 @@
             <v-col cols=12 md=8>
               <v-text-field
                 full-width
-                class="mt-6 mb-4 ml-4"
+                class="mt-6 mb-4 mx-4"
                 v-model="simpleSearch"
                 text
                 prepend-icon="search"
@@ -41,7 +46,7 @@
               <div class="d-flex flex-column flex-md-row ml-md-4" style="width: 100%">
                 <v-text-field
                   full-width
-                  class="mt-6 mb-4 mx-2"
+                  class="mt-6 mb-4 mx-4"
                   v-model="author"
                   text
                   solo
@@ -50,16 +55,17 @@
                   clearable
               />
                 <v-select
-                  class="mt-6 mb-4 mx-2"
+                  class="mt-6 mb-4 mx-4"
                   v-model="genre"
                   :items="genre"
                   label="Genre"
                   chips
                   clearable
+                  solo
                 />
                 <v-text-field
                   full-width
-                  class="mt-6 mb-4 mx-2"
+                  class="mt-6 mb-4 mx-4"
                   v-model="yearFrom"
                   text
                   solo
@@ -69,7 +75,7 @@
               />
                 <v-text-field
                   full-width
-                  class="mt-6 mb-4 mx-2"
+                  class="mt-6 mb-4 mx-4"
                   v-model="yearTo"
                   text
                   solo
@@ -105,8 +111,10 @@
 </template>
 <script>
 import qs from 'qs'
+import { mapGetters } from 'vuex'
 
 export default {
+  middleware: 'auth-admin-or-reader',
   data () {
     return {
       simpleSearch: null,
@@ -117,6 +125,12 @@ export default {
       result: null,
       genre: ['roman', 'BD', 'poésie', 'documentaire', 'policier', 'manga']
     }
+  },
+    computed: {
+    ...mapGetters(['isAuthenticated', 'loggedInUser'])
+  },
+  mounted () {
+    console.log(this.$auth.user.roles.includes('ROLE_ADMIN'))
   },
   methods: {
     async simpleSearchBooks () {
@@ -150,7 +164,6 @@ export default {
         console.log(error)
       })
     }
-
   }
 }
 </script>

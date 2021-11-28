@@ -15,6 +15,8 @@
             <v-card-text>{{ book.description }}</v-card-text>
           </v-col>
         </v-card>
+        <v-btn color="primary" elevation="0" tile class="mx-6 mt-4" @click="reserveBook" :disabled="reserved || book.stock < 0 || !$auth.user.isValidated"><span class="secondary--text font-weight-bold montserrat">Réserver</span></v-btn>
+    <v-col v-if="reserved" class="montserrat primary--text">Le livre a été réservé</v-col>
     </v-col>
 </v-row>
 </template>
@@ -22,15 +24,33 @@
   export default {
     data () {
       return {
-        book: null
+        book: null,
+        reserved: false
       }
     },
     mounted () {
       this.getBook()
+      console.log(this.$auth.user)
+      console.log(this.book)
     },
     methods: {
       async getBook () {
         this.book = await this.$axios.$get('http://localhost:8000/api/books/' + this.$route.params.id + '.json')
+      },
+      async reserveBook () {
+        await this.$axios.$post('http://localhost:8000/api/reserveds', {
+          start: this.$dayjs().format(),
+          end: this.$dayjs().add(3, 'day').format(),
+          user: '/api/users/' + this.$auth.user.id,
+          book: '/api/books/' + this.book.id
+        })
+        .then(() => {
+          this.reserved = true
+          this.$axios.$put('http://localhost:8000/api/books/' + this.book.id,
+          {
+            stock: this.book.stock - 1
+          })
+        })
       }
     }
   }
