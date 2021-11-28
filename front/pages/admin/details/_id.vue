@@ -54,29 +54,29 @@
     },
     methods: {
       async searchUserbyId () {
-        await this.$axios.$get('http://localhost:8000/api/users/' + this.$route.params.id + '.json')
+        await this.$axios.$get('/api/users/' + this.$route.params.id + '.json')
         .then((response) => {
           this.user = response
         })
       },
       async validateReservation (bookId, resId) {
-        await this.$axios.$post('http://localhost:8000/api/borroweds', {
+        await this.$axios.$post('/api/borroweds', {
           start: this.$dayjs().format(),
           end: this.$dayjs().add(3, 'week').format(),
           user: '/api/users/' + this.user.id,
           book: '/api/books/' + bookId
         })
         .then(() => {
-          this.$axios.$delete('http://localhost:8000/api/reserveds/' + resId)
+          this.$axios.$delete('/api/reserveds/' + resId)
         })
         .finally(() => {
           this.searchUserbyId()
         })
       },
       async refuseReservation (bookId, resId, stock) {
-        await this.$axios.$delete('http://localhost:8000/api/reserveds/' + resId)
+        await this.$axios.$delete('/api/reserveds/' + resId)
         .then(() => {
-          this.$axios.$put('http://localhost:8000/api/books/' + bookId,
+          this.$axios.$put('/api/books/' + bookId,
           {
             stock: stock + 1
           })
@@ -86,9 +86,9 @@
         })
       },
       async returnBook (loanId, bookId, stock) {
-        await this.$axios.$delete('http://localhost:8000/api/borroweds/' + loanId)
+        await this.$axios.$delete('/api/borroweds/' + loanId)
         .then(() => {
-          this.$axios.$put('http://localhost:8000/api/books/' + bookId,
+          this.$axios.$put('/api/books/' + bookId,
           {
             stock: stock + 1
           })

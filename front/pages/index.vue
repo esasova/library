@@ -134,7 +134,7 @@ export default {
   },
   methods: {
     async simpleSearchBooks () {
-     await this.$axios.$get('http://localhost:8000/api/books.json?title=' + this.simpleSearch)
+     await this.$axios.$get('/api/books.json?title=' + this.simpleSearch)
       .then((response) => {
         this.result = response
       })
@@ -144,7 +144,7 @@ export default {
     },
     async advancedSearch () {
       console.log(this.author, this.yearFrom, this.yearTo)
-      await this.$axios.$get('http://localhost:8000/api/books.json',
+      await this.$axios.$get('/api/books.json',
       {
         params: {
           author: this.author,

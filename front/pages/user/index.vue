@@ -66,7 +66,7 @@ export default {
   },
   methods: {
       async searchUserbyId () {
-        await this.$axios.$get('http://localhost:8000/api/users/' + this.loggedInUser.id + '.json')
+        await this.$axios.$get('/api/users/' + this.loggedInUser.id + '.json')
         .then((response) => {
           this.user = response,
           this.overdue = this.user.borroweds.filter(b => this.$dayjs(this.$dayjs(b.end).format()).isBefore(this.$dayjs().format()))

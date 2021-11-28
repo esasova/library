@@ -35,10 +35,10 @@
     },
     methods: {
       async getBook () {
-        this.book = await this.$axios.$get('http://localhost:8000/api/books/' + this.$route.params.id + '.json')
+        this.book = await this.$axios.$get('/api/books/' + this.$route.params.id + '.json')
       },
       async reserveBook () {
-        await this.$axios.$post('http://localhost:8000/api/reserveds', {
+        await this.$axios.$post('/api/reserveds', {
           start: this.$dayjs().format(),
           end: this.$dayjs().add(3, 'day').format(),
           user: '/api/users/' + this.$auth.user.id,
@@ -46,7 +46,7 @@
         })
         .then(() => {
           this.reserved = true
-          this.$axios.$put('http://localhost:8000/api/books/' + this.book.id,
+          this.$axios.$put('/api/books/' + this.book.id,
           {
             stock: this.book.stock - 1
           })

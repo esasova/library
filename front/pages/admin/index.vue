@@ -130,7 +130,7 @@
     },
     methods: {
       async getNewUsers () {
-        await this.$axios.$get('http://localhost:8000/api/users.json')
+        await this.$axios.$get('/api/users.json')
         .then((response) => {
           this.newUsers = response.filter(u => u.isValidated === false)
           this.showNewUsers = this.newUsers.length > 0 ? true : false
@@ -141,7 +141,7 @@
       },
       async searchBook () {
         this.resultUser = null
-        await this.$axios.$get('http://localhost:8000/api/books.json', 
+        await this.$axios.$get('/api/books.json', 
         {
           params: {
             title: this.book
@@ -156,13 +156,13 @@
       },
       async searchUser () {
         this.resultBook = null
-        await this.$axios.$get('http://localhost:8000/api/users.json?surname=' + this.user)
+        await this.$axios.$get('/api/users.json?surname=' + this.user)
         .then((response) => {
           this.resultUser = response
         })
       },
       validateUser (id) {
-        this.$axios.$put('http://localhost:8000/api/users/' + id,
+        this.$axios.$put('/api/users/' + id,
         {
           isValidated: true
         })
@@ -174,7 +174,7 @@
         })
       },
       deleteUser (id) {
-        this.$axios.$delete('http://localhost:8000/api/users/' + id)
+        this.$axios.$delete('/api/users/' + id)
         .then(() => {
           this.getNewUsers()
         })

@@ -102,7 +102,7 @@ export default {
   methods: {
     async addBook () {
       if(this.$refs.addBook.validate()) {
-        await this.$axios.$post('http://localhost:8000/api/books',
+        await this.$axios.$post('/api/books',
       {
         author: this.author,
         title: this.title,

@@ -84,7 +84,7 @@
     methods: {
       async handleSubmit () {
         if(this.$refs.inscriptionForm.validate()) {
-          await this.$axios.$post('http://localhost:8000/api/users', 
+          await this.$axios.$post('/api/users', 
           {
               name: this.name,
               surname: this.surname,
