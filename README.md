@@ -1,7 +1,9 @@
 # library
-Trello : https://trello.com/b/BvCE4CfE/m%C3%A9diath%C3%A8que
-Mock-ups : https://app.moqups.com/mZpagkWfIffJQaxHd0CdTuae8ickq6Tn/view/page/ae973f342
-Les diagrammes de classes et de sequences se trouvent dans le dossier /doc
+## Trello : 
+https://trello.com/b/BvCE4CfE/m%C3%A9diath%C3%A8que
+## Mock-ups : 
+https://app.moqups.com/mZpagkWfIffJQaxHd0CdTuae8ickq6Tn/view/page/ae973f342
+#### Les diagrammes de classes et de sequences se trouvent dans le dossier /doc
 
 ## Technologies utilisées : 
 ### Back :
